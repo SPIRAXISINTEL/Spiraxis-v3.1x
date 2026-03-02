@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-sans: 'Inter', sans-serif;
+    --font-display: 'Outfit', sans-serif;
+    --font-serif: 'Playfair Display', serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    /* Base Colors - Deep Dark Professional Theme */
+    --background: 220 17% 7%;     /* #0f1115 */
+    --foreground: 210 40% 93%;    /* #e6edf3 */
+    
+    /* Surfaces */
+    --surface: 214 21% 11%;       /* #161b22 */
+    --surface-hover: 216 18% 14%; /* #1c2128 */
+    --border: 212 12% 21%;        /* #30363d */
+    
+    /* Text */
+    --text-muted: 211 10% 46%;    /* #8b949e */
+    --text-faint: 214 10% 31%;    /* #484f58 */
+
+    /* Accents */
+    --gold: 40 80% 70%;           /* #f0c674 */
+    --teal: 186 46% 54%;          /* #56b6c2 */
+    --red: 3 93% 63%;             /* #f85149 */
+    --green: 128 49% 48%;         /* #3fb950 */
+    --orange: 24 74% 59%;         /* #e3884a */
+    --yellow: 40 73% 48%;         /* #d29922 */
+    
+    /* Standard Shadcn variables mapped to our theme */
+    --card: var(--surface);
+    --card-foreground: var(--foreground);
+    --popover: var(--surface);
+    --popover-foreground: var(--foreground);
+    --primary: var(--teal);
+    --primary-foreground: 220 17% 7%;
+    --secondary: var(--surface-hover);
+    --secondary-foreground: var(--foreground);
+    --muted: var(--surface-hover);
+    --muted-foreground: var(--text-muted);
+    --accent: var(--surface-hover);
+    --accent-foreground: var(--foreground);
+    --destructive: var(--red);
+    --destructive-foreground: 210 40% 93%;
+    --ring: var(--teal);
+    --radius: 0.75rem;
+  }
+  
+  body {
+    @apply bg-background text-foreground antialiased selection:bg-teal/30 selection:text-teal-foreground;
+    font-family: var(--font-sans);
+    background-image: 
+      radial-gradient(circle at 15% 50%, hsl(var(--teal) / 0.03), transparent 25%),
+      radial-gradient(circle at 85% 30%, hsl(var(--gold) / 0.03), transparent 25%);
+    background-attachment: fixed;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    @apply tracking-tight;
+  }
+}
+
+@layer components {
+  /* Custom Range Slider Styling */
+  input[type=range] {
+    @apply appearance-none bg-transparent w-full h-1.5 rounded-full cursor-pointer;
+    background-color: hsl(var(--border));
+  }
+
+  input[type=range]::-webkit-slider-thumb {
+    @apply appearance-none w-4 h-4 rounded-full bg-teal shadow-[0_0_10px_rgba(86,182,194,0.5)] transition-transform duration-200 hover:scale-125;
+    margin-top: -5px; /* Center thumb on track */
+  }
+
+  input[type=range]::-webkit-slider-runnable-track {
+    @apply w-full h-1.5 rounded-full cursor-pointer;
+  }
+  
+  input[type=range]:focus {
+    @apply outline-none;
+  }
+  
+  input[type=range]:focus::-webkit-slider-thumb {
+    @apply ring-2 ring-teal/50 ring-offset-2 ring-offset-background;
+  }
+
+  /* Glass Panel Effect */
+  .glass-panel {
+    @apply bg-surface/80 backdrop-blur-md border border-border shadow-lg;
+  }
+  
+  /* Gradient Borders */
+  .border-gradient {
+    position: relative;
+    background: clip-padding-box hsl(var(--surface));
+    border: 1px solid transparent;
+  }
+  .border-gradient::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    z-index: -1;
+    margin: -1px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, hsl(var(--gold)/0.3), hsl(var(--teal)/0.1), transparent);
+  }
+}
+
+/* Animations */
+@keyframes pulse-ring {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(248, 81, 73, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(248, 81, 73, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(248, 81, 73, 0); }
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 2s infinite;
+}
+
+/* Hide scrollbar for clean dashboard look */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--text-muted));
+}
